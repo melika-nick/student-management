@@ -45,7 +45,7 @@ try{
 <body>
     <h2>change password <br></h2>
     <?php if (!empty($message)): ?>
-        <p><?php echo $message; ?></p>
+        <p><?= $message ?></p>
     <?php endif; ?>
     <form method="post" action="">
         <label name="current_pass">current password</label>
