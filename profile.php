@@ -8,14 +8,15 @@ if (!isset($_SESSION['user'])) {
 try{
     $message = '';
     $userId = $_SESSION['user']['id'];
-    $current_pass = trim(isset($_POST['current_pass']) ?? '');
-    $new_pass = trim(isset($_POST['new_pass']) ?? '');
-    $confirm_pass = trim(isset($_POST['confirm_pass']) ?? '');
+    $current_pass = trim($_POST['current_pass'] ?? '');
+    $new_pass = trim($_POST['new_pass'] ?? '');
+    $confirm_pass = trim($_POST['confirm_pass'] ?? '');
+
     $db = new Database();
     $pdo = $db -> connect();
     $sql = "SELECT password FROM users WHERE id = ?";
     $stmt = $pdo->prepare($sql);
-    $stmt -> execute(['id'=> $userId]);
+    $stmt -> execute([$userId]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
     if (!$user || !password_verify($current_pass, $user['password'])) {
         $message = '❌ Current password is incorrect.';
@@ -25,9 +26,9 @@ try{
         $message = '❌ Password confirmation does not match.';
     } else {
         // hash new password and save it
-        $newHashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+    $newHashedPassword = password_hash($new_pass, PASSWORD_DEFAULT);
         $update = $pdo->prepare("UPDATE users SET password = ? WHERE id = ?");
-        $update->execute(['password' => $newHashedPassword, 'id' => $userId]);
+        $update->execute([$newHashedPassword, $userId]);
         $message = '✅ Password changed successfully.';
     }
 }catch(PDOException $e){
@@ -43,8 +44,8 @@ try{
 </head>
 <body>
     <h2>change password <br></h2>
-    <?php if($message): ?>
-        <p><? $message ?></p>
+    <?php if (!empty($message)): ?>
+        <p><?php echo $message; ?></p>
     <?php endif; ?>
     <form method="post" action="">
         <label name="current_pass">current password</label>
