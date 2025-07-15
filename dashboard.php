@@ -16,6 +16,9 @@
     <a href="./student/update.php">Edit Student Information</a>
     <br><br>
     <a href="./student/delete.php">Delete Student from System</a>
+    <br><br><br><br>
+    <a href="./profile.php">change my password</a>
+
 </form>
 </body>
 </html>
