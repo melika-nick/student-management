@@ -25,6 +25,8 @@ if (!isset($_SESSION['user'])) {
     <a href ="./report.php">Student Report</a>
     <br><br><br><br>
     <a href="./profile.php">change my password</a>
+    <br><br><br><br>
+    <a href="./logout.php">log out</a>
 
 </form>
 </body>
